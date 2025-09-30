@@ -1,9 +1,8 @@
-
 import React, { useState, useCallback, ChangeEvent } from 'react';
-import type { QrCustomizationState, ErrorCorrectionLevel } from '../types';
+import type { QrCustomizationState, ErrorCorrectionLevel, QrStyle, QrFrameStyle } from '../types';
 import { QrType } from '../types';
 import { GlassCard } from './GlassCard';
-import { Sparkles, Upload, Link, Type, Wifi, Mail } from 'lucide-react';
+import { Sparkles, Upload, Link, Type, Wifi, Mail, Square, Circle, AppWindow, XSquare, Move, MessageSquare, Grid } from 'lucide-react';
 import { getAiSuggestion } from '../services/geminiService';
 
 interface QrCustomizerProps {
@@ -83,6 +82,20 @@ export const QrCustomizer: React.FC<QrCustomizerProps> = ({ onQrValueChange, onC
     { type: QrType.WiFi, icon: Wifi, label: 'Wi-Fi' },
     { type: QrType.Email, icon: Mail, label: 'Email' }
   ];
+  
+  const STYLE_OPTIONS: { style: QrStyle; label: string; icon: React.FC<any> }[] = [
+    { style: 'squares', label: 'Squares', icon: Square },
+    { style: 'rounded', label: 'Rounded', icon: AppWindow },
+    { style: 'dots', label: 'Dots', icon: Circle },
+  ];
+
+  const FRAME_OPTIONS: { style: QrFrameStyle; label: string; icon: React.FC<any> }[] = [
+    { style: 'none', label: 'None', icon: XSquare },
+    { style: 'box', label: 'Box', icon: Square },
+    { style: 'corners', label: 'Corners', icon: Move },
+    { style: 'scan-me-bubble', label: 'Scan Me', icon: MessageSquare },
+    { style: 'dots-frame', label: 'Dots', icon: Grid },
+  ];
 
   return (
     <GlassCard className="h-full flex flex-col">
@@ -127,6 +140,38 @@ export const QrCustomizer: React.FC<QrCustomizerProps> = ({ onQrValueChange, onC
                 </div>
               </div>
             </div>
+
+            <div>
+              <h3 className="font-semibold mb-3">Module Style</h3>
+              <div className="flex space-x-2">
+                {STYLE_OPTIONS.map(({ style, label, icon: Icon }) => (
+                  <button 
+                    key={style} 
+                    onClick={() => onCustomizationChange({ style })} 
+                    className={`w-full py-2 text-sm font-medium rounded-md transition-all flex items-center justify-center space-x-2 ${customization.style === style ? 'bg-accent-gradient text-white' : 'bg-white/5 hover:bg-white/10 text-secondary-text'}`}
+                  >
+                    <Icon size={16} />
+                    <span>{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-3">Frame Style</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {FRAME_OPTIONS.map(({ style, label, icon: Icon }) => (
+                  <button 
+                    key={style} 
+                    onClick={() => onCustomizationChange({ frameStyle: style })}
+                    className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${customization.frameStyle === style ? 'border-blue-500 bg-blue-500/10' : 'border-transparent bg-white/5 hover:bg-white/10'}`}>
+                     <Icon size={24} className={customization.frameStyle === style ? 'text-blue-400' : 'text-secondary-text'} />
+                    <span className={`mt-1 text-xs font-medium ${customization.frameStyle === style ? 'text-primary-text' : 'text-secondary-text'}`}>{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
              <div>
               <h3 className="font-semibold mb-3">Logo</h3>
               <label htmlFor="logo-upload" className="w-full flex items-center justify-center px-4 py-3 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:bg-white/5 transition-colors">
