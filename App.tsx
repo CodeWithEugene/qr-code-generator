@@ -40,6 +40,9 @@ const App: React.FC = () => {
             </div>
           </div>
         </main>
+        <footer className="text-center p-4 text-secondary-text text-sm border-t border-white/10">
+          Made with ❤️ by <a href="https://codewitheugene.top/" target="_blank" rel="noopener noreferrer" className="text-primary-text font-semibold hover:text-blue-400 transition-colors">Eugenius</a>.
+        </footer>
       </div>
     </div>
   );

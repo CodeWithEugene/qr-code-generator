@@ -21,7 +21,7 @@ export const Sidebar: React.FC = () => {
     <aside className="w-64 bg-black/20 p-4 border-r border-white/10 hidden md:flex flex-col">
       <div className="flex items-center space-x-2 mb-10 p-2">
         <QrCode className="h-8 w-8 bg-accent-gradient p-1.5 rounded-lg text-white" />
-        <h1 className="text-xl font-bold text-primary-text">ProQR Maker</h1>
+        <h1 className="text-xl font-bold text-primary-text">QR Code Generator</h1>
       </div>
       <nav className="flex-1 flex flex-col space-y-2">
         <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active />
